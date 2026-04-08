@@ -13,6 +13,7 @@ export default function Checkout() {
   const total = getCartTotal();
 
   function placeOrder() {
+    if (cartItems.length === 0) return;
     alert("Successful Order");
     clearCart();
   }
@@ -81,6 +82,7 @@ export default function Checkout() {
             <button
               className="btn btn-primary btn-large btn-block"
               onClick={placeOrder}
+              disabled={cartItems.length === 0}
             >
               Place Order
             </button>

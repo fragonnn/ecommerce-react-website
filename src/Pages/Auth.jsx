@@ -37,7 +37,7 @@ export default function Auth() {
     <div className="page">
       <div className="container">
         <div className="auth-container">
-          <h1 className="page-ttile">
+          <h1 className="page-title">
             {mode === "signup" ? "Sign Up" : "Login"}
           </h1>
           <form className="auth-form" onSubmit={handleSubmit(onSubmit)}>
