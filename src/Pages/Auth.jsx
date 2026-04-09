@@ -5,8 +5,14 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 
 export default function Auth() {
   const [searchParams, setSearchParams] = useSearchParams();
+  // const mode = searchParams.get("mode") || "signup";
+  // const redirect = searchParams.get("redirect") || "/";
   const mode = searchParams.get("mode") || "signup";
-  const redirect = searchParams.get("redirect") || "/";
+  const rawRedirect = searchParams.get("redirect") || "/";
+  const redirect =
+    rawRedirect.startsWith("/") && !rawRedirect.startsWith("//")
+      ? rawRedirect
+      : "/";
 
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -29,7 +35,7 @@ export default function Auth() {
     }
 
     if (result.success) {
-      navigate(redirect);
+      navigate(redirect, { replace: true });
     } else {
       setError(result.error);
     }
