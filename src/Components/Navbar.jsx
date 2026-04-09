@@ -3,6 +3,7 @@ import { useAuth } from "../context/AuthContext";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
+
   return (
     <nav className="navbar">
       <div className="navbar-container">
@@ -20,10 +21,13 @@ export default function Navbar() {
         <div className="navbar-auth">
           {!user ? (
             <div className="navbar-auth-links">
-              <Link to="/auth" className="btn btn-secondary">
+              <Link
+                to="/auth?mode=login&redirect=/"
+                className="btn btn-secondary"
+              >
                 Login
               </Link>
-              <Link to="/auth" className="btn btn-primary">
+              <Link to="/auth?mode=signup" className="btn btn-primary">
                 Signup
               </Link>
             </div>

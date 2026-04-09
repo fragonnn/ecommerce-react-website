@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export default function Auth() {
-  const [mode, setMode] = useState("signup");
-  const [error, setError] = useState(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const mode = searchParams.get("mode") || "signup";
+  const redirect = searchParams.get("redirect") || "/";
 
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const { signUp, login } = useAuth();
@@ -27,7 +29,7 @@ export default function Auth() {
     }
 
     if (result.success) {
-      navigate("/");
+      navigate(redirect);
     } else {
       setError(result.error);
     }
@@ -88,7 +90,10 @@ export default function Auth() {
             {mode === "signup" ? (
               <p>
                 Already have an account?{" "}
-                <span className="auth-link" onClick={() => setMode("login")}>
+                <span
+                  className="auth-link"
+                  onClick={() => setSearchParams({ mode: "login", redirect })}
+                >
                   Login
                 </span>
               </p>
@@ -96,7 +101,10 @@ export default function Auth() {
               <p>
                 {" "}
                 Don't have an account?{" "}
-                <span className="auth-link" onClick={() => setMode("signup")}>
+                <span
+                  className="auth-link"
+                  onClick={() => setSearchParams({ mode: "signup", redirect })}
+                >
                   Sign Up
                 </span>
               </p>
